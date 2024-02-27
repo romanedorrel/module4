@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<template id="news-template">
+    <div class="card col-4" >
+        <div class="card-body">
+            <h5 class="card-title">News title</h5>
+            <p class="card-text">News text.</p>
+        </div>
+    </div>
+</template>
+</div>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link
+href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet">
+<title>Dynamic News</title>
+</head>
+<body>
+    <div class="container p4">
+        <h2>Current News</h2>
+        <div id="news-list" class = "row"></div>
+
+        <div><button onclick="stopInterval()">Stop Reloading</button></div><br>
+
+        <form onsubmit="createNewsItems(event)">
+            <label for="newsTitle">News Item Title: </label>
+            <input name="Title" id="newsTitle"><br>
+            <label for="newsContent">News Item Content: </label>
+            <input name="content" id="newsContent"><br>
+            <button>Add News Item</button>  
+        </form> 
+    </div>
+<script>
+// use carData and getCars function from previous slide
+let news = [
+        { id: 1, title: 'Election Results',
+            content: "Newly elected minister..." },
+        { id: 2, title: 'Sporting Success',
+            content: "World Cup winners..." },
+        { id: 3, title: 'Tornado Warning',
+            content: "Residents should prepare..." }
+];
+
+function getNews() {
+    document.getElementById('news-list').innerText = '';
+    news.forEach(item => addCard(item));
+
+}
+getNews();
+
+let refresh = setInterval(getNews, 5000);
+
+
+// clone, then populate, then append a new template
+function addCard(news) {
+    const template = document.getElementById("news-template").content.cloneNode(true);
+    template.querySelector('.card-title').innerText = news.title;
+    template.querySelector('.card-text').innerText = news.content;
+    document.querySelector('#news-list').appendChild(template);
+}
+
+function createNewsItems(event){
+    event.preventDefault();
+    let newsTitle = document.getElementById('newsTitle').value;
+    let newsContent = document.getElementById('newsContent').value;
+    news.push({title: newsTitle, content: newsContent, id: news.lenght + 1})
+}
+function stopInterval(){
+    clearInterval(refresh);
+}
+
+
+</script>
+</body>
+</html>
