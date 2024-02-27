@@ -1,0 +1,105 @@
+<html>
+<head>
+<title>Moment.Js</title>
+<!-- reference Moment.js library -->
+<script
+src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.mi
+n.js"></script>
+</head>
+<body>
+<h2>Moment Date</h2>
+<!-- container for Moment.js output -->
+<div id="displayMoment"></div>
+
+<h2>Birthday Date</h2>
+<!-- container for JavaScript Date output -->
+<div id="displayBDayDate"></div>
+
+<h2>Days since Birthday</h2>
+<!--container for difference between birthday and moment-->
+<div id="daysSinceBDay"></div>
+
+<h2>Years, Months and days since Birthday</h2>
+<!--container for time since birthday in day months and years-->
+<div id="timeSinceBday"></div>
+
+<h2>Closest Date</h2>
+<!--container for closest of two dates-->
+<div id="closestDate"></div>
+
+<h2>Earliest Date</h2>
+<!--container for first of two dates-->
+<div id="Date"></div>
+
+<h2>Time in London</h2>
+<!--container for Time in london-->
+<div id="time in london"></div>
+
+<script type="text/javascript">
+
+
+ //birthday   
+ const birthday = '08/06/1992'  
+
+// instantiate a moment object
+let nowMoment = moment();
+
+// instantiate a JavaScript Date object
+let bDayDate = moment(birthday, 'MM/DD/YYYY');
+
+//instantiate a difference date object
+let daySinceBday = nowMoment.diff(bDayDate, 'days');
+
+// time since Bday in year months and days format
+ const timeLapsed = moment.duration(nowMoment.diff(bDayDate));
+ const years = timeLapsed.years();
+ const months = timeLapsed.months();
+ const days = timeLapsed.days();
+
+// display value of moment object in #displayMoment div
+let displayMoment = document.getElementById('displayMoment').innerHTML = nowMoment;
+
+// display value of Date object in #displayJsDate div
+let displayBDate = document.getElementById('displayBDayDate').innerHTML = bDayDate;
+
+//display days since birthday in #daysSinceBday div
+let displayDaysSinceBDay = document.getElementById('daysSinceBDay').innerHTML = daySinceBday;
+
+//displays days since birthday in years, months and days in #timeSinceBday div
+ let displaytimeSinceBday = document.getElementById('timeSinceBday');
+ displaytimeSinceBday.innerHTML = `${years} years ${months} months ${days} days`;
+
+ 
+ //function for comparing two dates and identifying closest to current moment
+function closestDate(date1, date2){
+
+    let momentDate1 = moment(date1,'MM/DD/YYYY');
+    let daysBetweenDate1 = Math.abs(nowMoment.diff(momentDate1,'days'));
+    
+    let momentDate2 = moment(date2, 'MM/DD/YYYY');
+    let daysBetweenDate2 = Math.abs(nowMoment.diff(momentDate2, 'days'));
+
+    let closest = (daysBetweenDate1 < daysBetweenDate2) ? momentDate1 : momentDate2;
+
+    let displayClosestDate = document.getElementById('closestDate').innerHTML = closest;
+}
+closestDate('03/15/1995', '08/06/1992');
+
+function dateIsBefore(date1, date2){
+    let firstDate = moment(date1, 'MM/DD/YYYY');
+    let secondDate = moment(date2, 'MM/DD/YYYY');
+    
+    let earliest = (firstDate.isBefore(secondDate)) ? `${firstDate} is before ${secondDate}` : `${secondDate} is before ${firstDate}`;
+
+    let displayEarliestDate = document.getElementById('Date').innerHTML = earliest;
+}
+
+dateIsBefore('03/15/1995', '08/06/1992');
+
+const londonTime = 0;
+const timeInLondon = nowMoment.clone().utcOffset(londonTime);
+
+let x = document.getElementById('time in london').innerHTML = timeInLondon;
+</script>
+</body>
+</html>
